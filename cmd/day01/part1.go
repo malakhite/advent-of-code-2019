@@ -4,33 +4,39 @@ import (
 	"bufio"
 	"fmt"
 	"log"
-	"math"
 	"os"
 	"strconv"
 )
 
-func main() {
-	subtotals := make([]int, 0, 10)
-	total := 0
+func getModuleWeights() []int {
 	file, err := os.Open("assets/day01input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
-
 	scanner := bufio.NewScanner(file)
+
+	weights := make([]int, 0, 10)
 	for scanner.Scan() {
 		number, err := strconv.Atoi(scanner.Text())
 		if err != nil {
 			log.Fatal(err)
 		}
-		result := int(math.Floor(float64(number)/float64(3))) - 2
-		subtotals = append(subtotals, result)
+		weights = append(weights, number)
 	}
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
+
+	return weights
+}
+
+func part1() {
+	fuelSubtotals := make([]int, 0, 10)
+	fuelTotal := 0
+
+	weights := getModuleWeights()
 
 	for _, subtotal := range subtotals {
 		total += subtotal
